@@ -9,3 +9,52 @@ The course covers testing, configuration and environment management, and the use
 
 ## Exercises
 ### [Part 0 - Fundamentals of Web apps](https://github.com/alffonti/fullstackopen/tree/master/part0)
+### [Part 1 - Introduction to React](https://github.com/alffonti/fullstackopen/tree/master/part1)
+### [Part 2 - Communicating with server](https://github.com/alffonti/fullstackopen/tree/master/part2)
+### [Part 3 - Programming a server with NodeJS and Express](https://github.com/alffonti/fullstackopen/tree/master/part3)
+### [Part 4 - Testing Express servers, user administration](https://github.com/alffonti/fullstackopen/tree/master/part4)
+### [Part 5 - Testing React apps](https://github.com/alffonti/fullstackopen/tree/master/part5)
+### [Part 6 - State management with Redux](https://github.com/alffonti/fullstackopen/tree/master/part6)
+### [Part 7 - React router, custom hooks, styling app with CSS and webpack](https://github.com/alffonti/fullstackopen/tree/master/part7)
+### [Part 8 - GraphQL](https://github.com/alffonti/fullstackopen/tree/master/part8)
+### [Part 9 - TypeScript](https://github.com/alffonti/fullstackopen/tree/master/part9)
+### [Part 10 - React Native](https://github.com/alffonti/fullstackopen/tree/master/part10)
+### [Part 11 - CI/CD](https://github.com/alffonti/fullstackopen/tree/master/part11)
+### [Part 12 - Containers](https://github.com/alffonti/fullstackopen/tree/master/part12)
+### [Part 13 - Using relational databases](https://github.com/alffonti/fullstackopen/tree/master/part13)
+
+
+## Directory Structure
+
+For each part of the course there is a directory, which further branches into directories containing a series of exercises, like "unicafe" for part 1.
+
+For each web application for a series of exercises, it is recommended to commit all files relating to that application , except for the directory node_modules.
+
+
+For each web application a React App was created using the following command:
+
+```shell
+cd Desktop/fullstackopen/part1/courseinfo
+npx create-react-app .
+npm start
+```
+
+The space and period at the end of the command are important because it tells the computer to create a new React application in that existing folder.
+
+### Available Scripts
+
+In the project directory, you can run:
+
+#### `rm -rf .git`
+
+Removes the Git repository at the root of your application. 
+create-react-app will automatically turn your project into a git-repository.
+
+#### `rm -rf node_modules/ && npm i`
+
+Remove the node_modules directory and install the dependencies again.
+
+#### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
