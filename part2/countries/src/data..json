@@ -1,0 +1,46 @@
+{
+	"coord": {
+		"lon": 24.9355,
+		"lat": 60.1695
+	},
+	"weather": [
+		{
+			"id": 601,
+			"main": "Snow",
+			"description": "snow",
+			"icon": "13n"
+		}
+	],
+	"base": "stations",
+	"main": {
+		"temp": 269.75,
+		"feels_like": 265.01,
+		"temp_min": 264.36,
+		"temp_max": 269.75,
+		"pressure": 974,
+		"humidity": 99
+	},
+	"visibility": 1800,
+	"wind": {
+		"speed": 3.6,
+		"deg": 50
+	},
+	"snow": {
+		"1h": 0.58
+	},
+	"clouds": {
+		"all": 100
+	},
+	"dt": 1670623673,
+	"sys": {
+		"type": 2,
+		"id": 2036194,
+		"country": "FI",
+		"sunrise": 1670656344,
+		"sunset": 1670678026
+	},
+	"timezone": 7200,
+	"id": 658225,
+	"name": "Helsinki",
+	"cod": 200
+}
