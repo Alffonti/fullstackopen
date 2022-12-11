@@ -2,7 +2,7 @@
 
 The web application aims to create a simple phonebook.
 
-The user is prevented from being able to add names that already exist in the phonebook.
+If the person's information is already in the phonebook, the application will display a dialog where the user can confirm whether to replace the old number with the new number.
 
 A search field was implemented to allow users to filter the list of people by name.
 
@@ -16,6 +16,8 @@ The following script was added to the *package.json* to start the json-server.
 "server": "json-server -p3001 --watch db.json"
 ```
 
+The code that handles the communication with the backend was extracted into its own module `./src/services/person.js˚`.
+
 ## Resources
 
 [String.prototype.includes()
@@ -28,3 +30,5 @@ The following script was added to the *package.json* to start the json-server.
 [Axios](https://axios-http.com/docs/intro)
 
 [useEffect hook](https://reactjs.org/docs/hooks-reference.html#useeffect)
+
+[Window.confirm()](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm)
