@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import personService from './services/person'
 
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 import Person from './components/Person'
 import PersonForm from './components/PersonForm'
 
@@ -11,6 +12,8 @@ const App = () => {
 	const [newNumber, setNewNumber] = useState('')
 	const [newSearch, setNewSearch] = useState('')
 	const [filteredPersons, setFilteredPersons] = useState(persons)
+	const [notificationMessage, setNotificationMessage] = useState(null)
+	const [notificationType, setNotificationType] = useState(null)
 
 	useEffect(() => {
 		personService.getAll().then(initialPersons => {
@@ -33,19 +36,48 @@ const App = () => {
 				)
 			) {
 				const updatedPerson = { ...hasName, number: newNumber }
-				personService.update(hasName.id, updatedPerson).then(returnedPerson => {
-					setPersons(
-						persons.map(person =>
-							person.id !== hasName.id ? person : returnedPerson
+				personService
+					.update(hasName.id, updatedPerson)
+					.then(returnedPerson => {
+						setPersons(
+							persons.map(person =>
+								person.id !== hasName.id ? person : returnedPerson
+							)
 						)
-					)
-				})
+						setNewName('')
+						setNewNumber('')
+						setNotificationMessage(
+							`Changed ${returnedPerson.name}'s phone number`
+						)
+						setNotificationType('success')
+						setTimeout(() => {
+							setNotificationMessage(null)
+							setNotificationType(null)
+						}, 5000)
+					})
+					.catch(error => {
+						console.error(error.message)
+						setNotificationMessage(
+							`Information of ${updatedPerson.name} has already been deleted from our server`
+						)
+						setNotificationType('error')
+						setTimeout(() => {
+							setNotificationMessage(null)
+							setNotificationType(null)
+						}, 5000)
+					})
 			}
 		} else {
 			personService.create(personObject).then(returnedPerson => {
 				setPersons(persons.concat(returnedPerson))
 				setNewName('')
 				setNewNumber('')
+				setNotificationMessage(`Added ${returnedPerson.name}`)
+				setNotificationType('success')
+				setTimeout(() => {
+					setNotificationMessage(null)
+					setNotificationType(null)
+				}, 5000)
 			})
 		}
 	}
@@ -55,6 +87,12 @@ const App = () => {
 			personService.remove(id).then(() => {
 				setPersons(persons.filter(p => p.id !== id))
 			})
+			setNotificationMessage(`Removed ${name}`)
+			setNotificationType('success')
+			setTimeout(() => {
+				setNotificationMessage(null)
+				setNotificationType(null)
+			}, 5000)
 		}
 	}
 
@@ -80,6 +118,7 @@ const App = () => {
 	return (
 		<div>
 			<h2>Phonebook</h2>
+			<Notification message={notificationMessage} type={notificationType} />
 			<Filter value={newSearch} onChange={handleSearchChange} />
 			<h2>add new</h2>
 			<PersonForm
