@@ -41,7 +41,7 @@ part2
   countries
 ```
 
-For each web application for a series of exercises, it is recommended to commit all files relating to that application , except for the directory node_modules.
+For each web application for a series of exercises, it is recommended to commit all files relating to that application, except for the directory node_modules.
 
 
 For each web application a React App was created using the following command:
@@ -59,7 +59,7 @@ Once in the project directory, I used the following commands:
 
 ### `rm -rf .git`
 
-Removes the Git repository at the root of your application. 
+Removes the Git repository at the root of your application.
 create-react-app will automatically turn your project into a git-repository.
 
 ### `rm -rf node_modules/ && npm i`
