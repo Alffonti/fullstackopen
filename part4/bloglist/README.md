@@ -26,9 +26,9 @@ The following npm-script was added:
 ├── build
 │   └── ...
 ├── controllers
-│   └── notes.js
+│   └── blog.js
 ├── models
-│   └── note.js
+│   └── blog.js
 ├── package-lock.json
 ├── package.json
 ├── utils
@@ -38,7 +38,7 @@ The following npm-script was added:
 ```
 
 The `controllers` directory defines the route handling functions.
-The `models` directory defines the Mongoose schema for notes.
+The `models` directory defines the Mongoose schema for blog entries.
 The `utils` directory defines the environment variables, middlewares, and the logging functions.
 The `index.js` file imports the actual application from the `app.js` file and then starts the application.
 The `app.js` file establishes the connection to the database and loads the middlewares to the application.
@@ -48,8 +48,6 @@ The `app.js` file establishes the connection to the database and loads the middl
 The **MongoDB Atlas** cloud data platform was used to built the MongoDB database.
 
 The **Mongoose** library was installed to provide schema validation, and to map objects in the code into documents in MongoDB.
-
-The `findbyId()`, `findByIdAndDelete()`, and `findByIdAndUpdate()` methods were used to get, delete, and update a note, respectively.
 
 Errors are handled by the **error-handler middleware**. E.g.: if the id query parameter is invalid, the error handler will send a response to the browser with the response object passed as a parameter.
 ```
@@ -69,6 +67,27 @@ const blogSchema = new mongoose.Schema({
 })
 ```
 
+The `toJSON` option was set in the Blog schema to transform the JSON object that will be returned when sending a response.
+
+## Linting
+
+The **ESlint** package was installed as a development dependency.
+
+The ESlint default configuration was run with the command:
+
+```
+npx eslint --init
+```
+
+After answering the questions, the `.eslintrc.js` configuration file was created.
+
+The following npm script `"lint": "eslint ."`  was added to check every file in the project by ESlint.
+
+The `build` directory was ignored by ESlint by creating a `.eslintignore` file in the project's root.
+
+The VSCode ESlint plugin was installed in order to run the linter continuously and see errors (which are underlined with a red line) in the code immediately.
+
 ## Resources
 
 - [Router - Express](https://expressjs.com/en/api.html#router)
+- [toJSON schema option - Mongoose](https://mongoosejs.com/docs/guide.html#toJSON)
