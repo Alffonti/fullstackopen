@@ -28,7 +28,6 @@ The token returned with a successful login is saved to the application's state `
 
 The conditional rendering of the login form was implemented so that it is visible only if a user is not logged-in. On the other hand, the name of the user and a list of blogs is shown if the user is logged-in.
 
-
 ## Resources
 
 - [Conditional rendering](https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator)
