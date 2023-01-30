@@ -59,6 +59,34 @@ const create = newObject => {
 }
 ```
 
+## Notifications
+
+Notifications that inform the user about successful and unsuccessful operations were implemented at the top of the page.
+
+```javascript
+  const notify = (message, type = 'info') => {
+    setNotification({ message, type })
+    setTimeout(() => {
+      setNotification(null)
+    }, 3000)
+  }
+```
+
+Some styles were added to the notification component to identify informational messages and error messages.
+
+```javascript
+  const style = {
+    color: notification.type === 'alert' ? 'red' : 'green',
+    background: 'lightgrey',
+    fontSize: 20,
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  }
+```
+
+
 ## Resources
 
 - [Conditional rendering](https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator)
