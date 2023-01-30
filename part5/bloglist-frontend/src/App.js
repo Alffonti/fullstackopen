@@ -4,12 +4,12 @@ import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
+import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -35,12 +35,9 @@ const App = () => {
     }, 3000)
   }
 
-  const addBlog = event => {
-    event.preventDefault()
-
-    blogService.create(newBlog).then(returnedBlog => {
+  const addBlog = blogObject => {
+    blogService.create(blogObject).then(returnedBlog => {
       setBlogs(blogs.concat(returnedBlog))
-      setNewBlog({ title: '', author: '', url: '' })
 
       notify(
         `a new blog ${returnedBlog.title} by ${returnedBlog.author} was added`
@@ -73,15 +70,6 @@ const App = () => {
     setUser(null)
   }
 
-  const handleInputChange = ({ target }) => {
-    const { name, value } = target
-
-    setNewBlog({
-      ...newBlog,
-      [name]: value,
-    })
-  }
-
   if (user === null) {
     return (
       <div>
@@ -105,11 +93,10 @@ const App = () => {
       <p>
         {user.name} logged in <button onClick={handleLogout}>logout</button>
       </p>
-      <BlogForm
-        addBlog={addBlog}
-        newBlog={newBlog}
-        handleInputChange={handleInputChange}
-      />
+      <Toggleable>
+        <BlogForm createBlog={addBlog} />
+      </Toggleable>
+
       {blogs.map(blog => (
         <Blog key={blog.id} blog={blog} />
       ))}

@@ -1,8 +1,6 @@
 const Notification = ({ notification }) => {
   if (notification === null) return null
 
-  console.log(notification)
-
   const style = {
     color: notification.type === 'alert' ? 'red' : 'green',
     background: 'lightgrey',

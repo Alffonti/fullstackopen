@@ -46,7 +46,7 @@ const setToken = newToken => {
 
 Logged-in user are allowed to add new blogs using the `token` set using the setToken() helper function from the `./src/services/blogs.js˚` file.
 
-The HTTP Authorization request header (containing the user access token) is declared in the `config` variable which is passed as a third parameter when making a POST request.
+The HTTP Authorization request header (containing the user access token) is declared in the `config` variable which is passed as a third argument when making a POST request.
 
 ```javascript
 const create = newObject => {
@@ -85,7 +85,6 @@ Some styles were added to the notification component to identify informational m
     marginBottom: 10,
   }
 ```
-
 
 ## Resources
 
