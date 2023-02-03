@@ -35,14 +35,42 @@ const App = () => {
     }, 3000)
   }
 
-  const addBlog = blogObject => {
-    blogService.create(blogObject).then(returnedBlog => {
-      setBlogs(blogs.concat(returnedBlog))
+  const addBlog = async blogObject => {
+    const returnedBlog = await blogService.create(blogObject)
+    setBlogs(blogs.concat({ ...returnedBlog, user }))
 
-      notify(
-        `a new blog ${returnedBlog.title} by ${returnedBlog.author} was added`
+    notify(
+      `a new blog ${returnedBlog.title} by ${returnedBlog.author} was added`
+    )
+  }
+
+  const handleLike = async id => {
+    const blog = blogs.find(blog => blog.id === id)
+
+    const changedBlog = { ...blog, likes: blog.likes + 1 }
+
+    try {
+      const returnedBlog = await blogService.update(id, changedBlog)
+      setBlogs(
+        blogs.map(blog =>
+          blog.id !== id ? blog : { ...returnedBlog, user: changedBlog.user }
+        )
       )
-    })
+    } catch (exception) {
+      notify(`The blog ${blog.title} was already deleted from our server`)
+    }
+  }
+
+  const handleDelete = async id => {
+    const blog = blogs.find(blog => blog.id === id)
+
+    const ok = window.confirm(`Remove blog ${blog.title} by ${blog.author}`)
+
+    if (ok) {
+      await blogService.remove(id)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+      notify(`Deleted ${blog.title} by ${blog.author}`)
+    }
   }
 
   const handleLogin = async event => {
@@ -59,9 +87,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.error(exception)
-
-      notify(`wrong username or password`, 'alert')
+      notify('wrong username or password', 'alert')
     }
   }
 
@@ -96,10 +122,19 @@ const App = () => {
       <Toggleable>
         <BlogForm createBlog={addBlog} />
       </Toggleable>
+      {}
 
-      {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
+      {blogs
+        .sort((a, b) => b.likes - a.likes)
+        .map(blog => (
+          <Blog
+            key={blog.id}
+            blog={blog}
+            user={user}
+            handleLike={() => handleLike(blog.id)}
+            handleDelete={() => handleDelete(blog.id)}
+          />
+        ))}
     </div>
   )
 }

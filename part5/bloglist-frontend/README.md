@@ -6,7 +6,13 @@ Application's link: https://bloglist.cyclic.app/
 
 This repository aims to build a Blog List application,that allows users to save information about interesting blogs they have stumbled across on the internet. Each listed blog contains the author, title, URL, and amount of upvotes from users of the application.
 
-The backend of the application was developed in the [part 4](https://github.com/Alffonti/fullstackopen/tree/main/part4/bloglist) of the course and runs on port 3003.
+Blog posts are listed by the number of likes.
+
+Each blog has a button which controls whether all of the details about the blog are shown or not.
+
+The backend of the application was developed in the [part 4](https://github.com/Alffonti/fullstackopen/tree/main/part4/bloglist) of the course.
+
+The backend can be started with `npm run dev` in its own directory. This will run the backend on port 3003.
 
 The initial state of the application was cloned from GitHub
 ```shell
@@ -18,9 +24,22 @@ cd bloglist-frontend   // go to cloned repository
 rm -rf .git
 ```
 
+The frontend can be started with `npm start` in its own directory. This will run the frontend on port 3000.
+
+
 ## HTTP requests
 
 The code that handles the communication with the backend was extracted into its own module `./src/services/blogs.js˚`.
+
+## Proxy
+
+A **proxy** field was added to `package.json` in order to tell the development server (backend) to proxy any unknown HTTP requests to the API server in **development mode**.
+
+```json
+"proxy": "http://localhost:3003",
+```
+
+If the frontend application makes an HTTP request to a server address at `http://localhost:3000` not managed by the React application itself (i.e. when requests are not about fetching a static asset such as the CSS or JavaScript of the application), the request will be **redirected** to the server at `http://localhost:3003`.
 
 ## Login
 
@@ -59,6 +78,16 @@ const create = newObject => {
 }
 ```
 
+After a blog is created, the server returns only the user's ID. The logged-in `user object` need to be added to the newly created blog in order to display the name of the user even when `the browser is not reloaded`.
+
+```javascript
+const addBlog = async blogObject => {
+  const returnedBlog = await blogService.create(blogObject)
+  setBlogs(blogs.concat({ ...returnedBlog, user }))
+  //
+}
+```
+
 ## Notifications
 
 Notifications that inform the user about successful and unsuccessful operations were implemented at the top of the page.
@@ -86,12 +115,61 @@ Some styles were added to the notification component to identify informational m
   }
 ```
 
+## Toggleable
+
+The `Togglable` component was created to add the visibility toggling functionality on both the login and note's creation form.
+
+`props.children` is used to render the elements defined between the opening and closing tags of the component.
+
+```javascript
+<Toggleable buttonLabel="new note">
+  <BlogForm createNote={addNote} />
+</Toggleable>
+```
+
+## Likes
+
+The handleLike function was created to add a like every time the like button is clicked.
+
+An HTTP PUT request is made to the server by passing the changed blog as the second parameter.
+
+```javascript
+const returnedBlog = await blogService.update(id, changedBlog)
+```
+
+The blog router for handling HTTP PUT request was updated in the backend in order to change the user reference (in the database, the `user` field of a blog document is a string, which represents the user ID, not an object).
+
+```javascript
+router.put('/:id', async (request, response) => {
+  //
+  const updatedBlog = await Blog.findByIdAndUpdate(
+    request.params.id,
+    { ...blog, user: blog.user.id },
+    //
+  )
+})
+```
+
+## Deleting a blog
+
+The `user` state was passed as props to the Blog component in order to show the delete button only if the blog post was added by the user.
+
+```
+{user.username === blog.user.username && (
+  <button style={buttonStyle} onClick={handleDelete}>
+    delete
+  </button>
+)}
+```
+
 ## Resources
 
 - [Conditional rendering](https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator)
 
--[Handling Multiple Inputs](https://reactjs.org/docs/forms.html#handling-multiple-inputs)
+- [Handling Multiple Inputs](https://reactjs.org/docs/forms.html#handling-multiple-inputs)
 
 - [Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Storage)
 
 - [How to send the authorization header using Axios](https://flaviocopes.com/axios-send-authorization-header/)
+
+- [Array.prototype.sort()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
