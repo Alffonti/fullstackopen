@@ -117,7 +117,7 @@ Some styles were added to the notification component to identify informational m
 
 ## Toggleable
 
-The `Togglable` component was created to add the visibility toggling functionality on both the login and note's creation form.
+The `Toggleable` component was created to add the visibility toggling functionality on both the login and note's creation form.
 
 `props.children` is used to render the elements defined between the opening and closing tags of the component.
 
@@ -154,12 +154,85 @@ router.put('/:id', async (request, response) => {
 
 The `user` state was passed as props to the Blog component in order to show the delete button only if the blog post was added by the user.
 
-```
+```javascript
 {user.username === blog.user.username && (
   <button style={buttonStyle} onClick={handleDelete}>
     delete
   </button>
 )}
+```
+
+## PropTypes
+
+The `prop-types` library was installed in order to validate the types of properties passed to components. When an invalid value is provided for a prop, a warning will be shown in the JavaScript console. For performance reasons, propTypes is only checked in development mode.
+
+## ESlint
+
+Eslint is installed by default to applications created with `create-react-app`.
+
+Base configuration file is extendend by adding the following ESlint configuration in `package.json`.
+
+```json
+"eslintConfig": {
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ]
+}
+```
+
+A `.eslintrc.js` file was created in order to override the default ESlint configuration with my desired configuration.
+
+The `eslint-plugin-jest` package was installed in order to avoid undesired and irrelevant linter errors while testing the frontend.
+
+The `.eslintignore` file was created in order to skip the `build` and `node_modules` directories when linting.
+
+## React Testing Library
+
+The `react-testing-library` was installed in order to test React components by simulating the ways that users interact with DOM nodes.
+
+Jest is installed by default to applications created with `create-react-app`.
+
+The `jest-dom` was installed in order to provide a set of custom jest matchers to write tests that assert various things about the state of a DOM.
+
+Unit test files are located in the same directory as the component being tested.
+
+Tests are run, by default, in `watch` mode with the `npm test` command in applications created with `create-react-app`.
+
+Components are rendered in a format that is suitable for testting using the `render` function provided by the react-testing-library:
+
+```
+render(<Blog/>)
+```
+
+A rendered component can be accessed using the `screen` object.
+
+The [query priority guide](https://testing-library.com/docs/queries/about#priority) was used in order to test the code in the most accessible way.
+
+The `getByText` method is used to find non-interactive elements (like divs, spans, and paragraphs) with the text content passed as argument.
+
+```
+const element = screen.getByText('React patterns by Michael Chan')
+```
+
+The `user-event` library was installed in order to simulate **user interactions** by dispatching the **events** that would happen if the interaction took place in a browser.
+
+The `userEvent.setup()` is used to start a session which mocks the UI layer to simulate user interactions like they would happen in the browser.
+
+```
+const user = userEvent.setup()
+```
+
+**Mock functions** were used in order to replace dependencies (event handlers) of the components being tested. Mocks make it possible to return hardcoded responses, and to verify the number of times the mock functions are called and with what parameters.
+
+```
+const mockHandler = jest.fn()
+```
+
+A test coverage can be generated with the following command:
+
+```
+CI=true npm test -- --coverage
 ```
 
 ## Resources
@@ -173,3 +246,5 @@ The `user` state was passed as props to the Blog component in order to show the 
 - [How to send the authorization header using Axios](https://flaviocopes.com/axios-send-authorization-header/)
 
 - [Array.prototype.sort()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
+
+- [@testing-library/jest-dom](https://github.com/testing-library/jest-dom)
