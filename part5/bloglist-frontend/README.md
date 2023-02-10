@@ -235,6 +235,57 @@ A test coverage can be generated with the following command:
 CI=true npm test -- --coverage
 ```
 
+## End to End Testing
+
+The **Cypress** library was installed as a development dependency in order to test the web application as a whole.
+
+The following script to the backend repository in order to start the backend in test mode.
+
+```javascript
+{
+  // ...
+  "scripts": {
+    // ...
+    "start:test": "NODE_ENV=test node index.js"
+  },
+  // ...
+}
+```
+
+The `testing` router was created in the backend in order to reset the database before each test is run when making a HTTP POST request to the `/api/testing/reset` endpoint.
+
+The `cypress:open": "cypress open"` script was added to the `package.json`.
+
+The `cypress` directory and the `cypress.config.js` file are automatically created after selecting the test type (E2E) in the Cypress Dashboard.
+
+Cypress global variables were added to the `eslintrc.js` configuration file.
+
+The Cypress ESlint plugin was installed as a development dependency in order to follow recommended Cypress rules.
+
+```javascript
+module.exports = {
+  env: {
+    // ...
+    'cypress/globals': true,
+  },
+  extends: [
+    // ...
+    'plugin:cypress/recommended',
+  ],
+  // ...
+  plugins: ['cypress'],
+  // ...
+}
+```
+
+<!-- The `cypress.config.js` file was added to the `.eslintignore` -->
+
+The [`baseUrl` global variable](https://docs.cypress.io/guides/references/best-practices#Setting-a-global-baseUrl) was defined in the Cypress configuration file in order to prefix the origin (domain under test) to any URL provided to commands like `cy.visit()` and `cy.request()`.
+
+The `BACKEND` environment variable was defined in the Cypress configuration file in order to reference the server address when using the `cy.request()` command. The server addess can be accessed within the tests using the [`Cypress.env()` syntax](https://docs.cypress.io/api/cypress-api/env).
+
+Anonymous function declarations were used instead of arrow functions in the E2E test files as recommended by [Mocha](https://mochajs.org/#arrow-functions) which Cypress relies on.
+
 ## Resources
 
 - [Conditional rendering](https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator)
@@ -248,3 +299,7 @@ CI=true npm test -- --coverage
 - [Array.prototype.sort()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
 
 - [@testing-library/jest-dom](https://github.com/testing-library/jest-dom)
+
+- [Cypress Docs](https://docs.cypress.io/guides/overview/why-cypress)
+
+- [eslint-plugin-cypress](https://github.com/cypress-io/eslint-plugin-cypress)
