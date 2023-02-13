@@ -25,6 +25,7 @@ const BlogForm = ({ createBlog }) => {
         <div>
           title:
           <input
+            id="title-input"
             type="text"
             value={newBlog.title}
             name="title"
@@ -35,6 +36,7 @@ const BlogForm = ({ createBlog }) => {
         <div>
           author:
           <input
+            id="author-input"
             type="text"
             value={newBlog.author}
             name="author"
@@ -45,6 +47,7 @@ const BlogForm = ({ createBlog }) => {
         <div>
           url:
           <input
+            id="url-input"
             type="text"
             value={newBlog.url}
             name="url"
@@ -52,7 +55,9 @@ const BlogForm = ({ createBlog }) => {
             aria-label="url-input"
           />
         </div>
-        <button type="submit">create</button>
+        <button id="create-button" type="submit">
+          create
+        </button>
       </form>
     </div>
   )

@@ -278,13 +278,17 @@ module.exports = {
 }
 ```
 
-<!-- The `cypress.config.js` file was added to the `.eslintignore` -->
+The `cypress.config.js` file was added to `.eslintignore`
 
 The [`baseUrl` global variable](https://docs.cypress.io/guides/references/best-practices#Setting-a-global-baseUrl) was defined in the Cypress configuration file in order to prefix the origin (domain under test) to any URL provided to commands like `cy.visit()` and `cy.request()`.
 
 The `BACKEND` environment variable was defined in the Cypress configuration file in order to reference the server address when using the `cy.request()` command. The server addess can be accessed within the tests using the [`Cypress.env()` syntax](https://docs.cypress.io/api/cypress-api/env).
 
 Anonymous function declarations were used instead of arrow functions in the E2E test files as recommended by [Mocha](https://mochajs.org/#arrow-functions) which Cypress relies on.
+
+The database is reset and initialize with a new user before each test is run.
+
+The `login` and `createBlog` custom commands were created in the `cypress/support/commands.js` file in order to [improve E2E test performance and readability](https://docs.cypress.io/api/cypress-api/custom-commands#Best-Practices) by logging into the application by making a HTTP POST request to their respective endpoints instead of using the UI interface.
 
 ## Resources
 
